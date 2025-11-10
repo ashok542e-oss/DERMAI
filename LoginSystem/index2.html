@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DERMAI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header >
+    <h1 >🌿👻DERMAI</h1>
+    <p>Know your skin. Trust your choices</p>
+  </header>
+
+  <!-- LOGIN SECTION -->
+  <section id="loginSection" class="login-section">
+    <h2>Welcome Back</h2>
+    <p>Please log in to access your personalized AI skincare consultant.</p>
+    <form id="loginForm">
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="Enter username" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter password" required />
+
+      <button type="submit">Login</button>
+    </form>
+  </section>
+
+  <!-- MAIN CONTENT (hidden until login) -->
+  <main id="mainContent" style="display:none;">
+    <section class="consult-form">
+      <h2>Tell us about your skin</h2>
+      <form id="skinForm">
+        <label for="skinType">Skin Type:</label>
+        <select id="skinType" required>
+          <option value="">Select one</option>
+          <option value="oily">Oily</option>
+          <option value="dry">Dry</option>
+          <option value="combination">Combination</option>
+          <option value="sensitive">Sensitive</option>
+          <option value="normal">Normal</option>
+        </select>
+
+        <label for="skinIssues">Describe your skin concerns:</label>
+        <textarea id="skinIssues" rows="4" placeholder="e.g. acne, redness, dullness..."></textarea>
+
+        <button type="submit">Analyze Skin</button>
+      </form>
+    </section>
+
+    <section class="ai-response">
+      <h2>AI Recommendation</h2>
+      <div id="aiOutput" class="output-box">
+        <p>Waiting for your input...</p>
+      </div>
+    </section>
+
+    <section class="product-info">
+      <h2>Pharma / Herbal Partner Input</h2>
+      <form id="productForm">
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" placeholder="e.g. AloeVera Gel" />
+
+        <label for="productType">Product Type:</label>
+        <select id="productType">
+          <option value="herbal">Herbal</option>
+          <option value="pharma">Pharma</option>
+          <option value="custom">Custom Formula</option>
+        </select>
+
+        <button type="submit">Suggest to User</button>
+      </form>
+      <div id="productOutput" class="output-box"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 DERMAI | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const loginSection = document.getElementById('loginSection');
+    const mainContent = document.getElementById('mainContent');
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value.trim();
+
+      if (user && pass) {
+        // Simple front-end login mock
+        loginSection.style.display = 'none';
+        mainContent.style.display = 'grid';
+      } else {
+        alert('Please enter username and password!');
+      }
+    });
+
+    const skinForm = document.getElementById('skinForm');
+    const aiOutput = document.getElementById('aiOutput');
+    const productForm = document.getElementById('productForm');
+    const productOutput = document.getElementById('productOutput');
+
+    skinForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const type = document.getElementById('skinType').value;
+      const issues = document.getElementById('skinIssues').value.toLowerCase();
+
+      let suggestion = '';
+
+      if (!type) {
+        aiOutput.innerHTML = '<p>Please select your skin type first.</p>';
+        return;
+      }
+
+      // Simple AI mock logic
+      if (issues.includes('acne')) {
+        suggestion = 'We recommend herbal tea tree-based products and gentle cleansers. For persistent acne, consult a dermatologist.';
+      } else if (issues.includes('redness') || type === 'sensitive') {
+        suggestion = 'Try calming products with aloe vera or chamomile. Avoid harsh chemicals.';
+      } else if (type === 'dry') {
+        suggestion = 'Use hydrating serums and products with hyaluronic acid. Consider a custom moisturizer blend.';
+      } else if (type === 'oily') {
+        suggestion = 'Use oil-free cleansers and light moisturizers. Herbal clay masks can help.';
+      } else {
+        suggestion = 'Your skin seems balanced! Maintain with mild herbal cleansers and sunscreen.';
+      }
+
+      aiOutput.innerHTML = `<p><strong>AI Suggestion:</strong> ${suggestion}</p>`;
+    });
+
+    productForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('productName').value;
+      const type = document.getElementById('productType').value;
+
+      if (!name) {
+        productOutput.innerHTML = '<p>Please enter a product name.</p>';
+        return;
+      }
+
+      productOutput.innerHTML = `<p><strong>Product Added:</strong> ${name} (${type})</p><p>AI will now include this product in future recommendations.</p>`;
+    });
+  </script>
+</body>
+</html>
+
+

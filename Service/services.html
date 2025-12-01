@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DERMAI - Services</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <link rel="icon" type="image/png" href="Dermai logo.png" />
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo-container">
+        <img src="Dermai logo.png" alt="DERMAI Logo" class="header-logo" />
+        <div class="logo-text">
+          <h1>DERMAI</h1>
+          <p class="tagline">AI-Powered Skincare Consultation</p>
+        </div>
+      </div>
+      <div class="header-links">
+        <a href="index.html" class="login-btn">Home</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="services-main">
+    <!-- Sub-header tabs bar -->
+    <nav class="services-subheader glass-soft">
+      <span class="services-subheader-label">Services</span>
+
+      <div class="services-tabs">
+        <button class="service-tab active" data-target="ai-analysis">
+          <span class="tab-icon">🔍</span>
+          <span>DERMAI Analysis</span>
+        </button>
+        <button class="service-tab" data-target="custom-builder">
+          <span class="tab-icon">🧪</span>
+          <span>Custom Builder</span>
+        </button>
+        <button class="service-tab" data-target="chatbot">
+          <span class="tab-icon">💬</span>
+          <span>Derma-AI Pharmacist</span>
+        </button>
+        <button class="service-tab" data-target="dermatologist">
+          <span class="tab-icon">👩‍⚕️</span>
+          <span>Dermatologist</span>
+        </button>
+        <button class="service-tab" data-target="tracking">
+          <span class="tab-icon">📊</span>
+          <span>Routine Tracking</span>
+        </button>
+        <button class="service-tab" data-target="ingredient-checker">
+          <span class="tab-icon">📄</span>
+          <span>Ingredient Checker</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Panels container -->
+    <section class="services-content glass-soft">
+      <!-- 1. DERMAI Analysis (merged with recommendations) -->
+      <div class="service-panel active" id="ai-analysis">
+        <h2>DERMAI ANALYSIS</h2>
+        <p class="panel-intro">
+          The DERMAI engine analyses your skin, lifestyle, water quality and routine to generate a personalized skin-health profile with AI support.
+        </p>
+
+        <!-- Analysis form -->
+        <form id="analysisForm" class="service-form">
+          <!-- Skin type -->
+          <div class="form-group">
+            <label for="skinType">Skin type</label>
+            <select id="skinType">
+              <option value="">Select your skin type</option>
+              <option>Dry</option>
+              <option>Oily</option>
+              <option>Combination</option>
+              <option>Sensitive</option>
+              <option>Normal</option>
+              <option>Rough / uneven</option>
+            </select>
+          </div>
+
+          <!-- Extra details when Combination is chosen -->
+          <div class="form-group combination-extra hidden" id="combinationGroup">
+            <label for="combinationDetail">Describe your combination pattern</label>
+            <input
+              type="text"
+              id="combinationDetail"
+              placeholder="E.g., oily T-zone, dry cheeks; dry around mouth, oily forehead, etc."
+            />
+          </div>
+
+          <!-- Skin concerns (pills instead of checkboxes) -->
+          <div class="form-group">
+            <label>Skin concerns</label>
+            <div class="concern-pills">
+              <button type="button" class="concern-pill" data-value="Acne">Acne</button>
+              <button type="button" class="concern-pill" data-value="Redness">Redness</button>
+              <button type="button" class="concern-pill" data-value="Dark spots">Dark spots</button>
+              <button type="button" class="concern-pill" data-value="Pigmentation">Pigmentation</button>
+              <button type="button" class="concern-pill" data-value="Dry patches">Dry patches</button>
+              <button type="button" class="concern-pill" data-value="Oil imbalance">Oil imbalance</button>
+              <button type="button" class="concern-pill concern-pill-other" data-type="other">Other…</button>
+            </div>
+          </div>
+
+          <!-- Other concern text appears when “Other” pill is active -->
+          <div class="form-group hidden" id="otherConcernGroup">
+            <label for="otherConcern">Describe other concern</label>
+            <input
+              type="text"
+              id="otherConcern"
+              placeholder="E.g., irritation around mouth, texture on forehead, etc."
+            />
+          </div>
+
+          <!-- Water type -->
+          <div class="form-group">
+            <label for="waterPH">Your area water type</label>
+            <select id="waterPH">
+              <option value="">Select one</option>
+              <option>Soft water</option>
+              <option>Moderately hard</option>
+              <option>Hard (high pH)</option>
+              <option>Very hard (very high pH)</option>
+            </select>
+          </div>
+
+          <!-- Current products / routine -->
+          <div class="form-group">
+            <label for="currentProducts">Current products / routine</label>
+            <textarea
+              id="currentProducts"
+              rows="3"
+              placeholder="List the products you currently use (cleanser, serum, moisturiser, sunscreen, etc.)"
+            ></textarea>
+          </div>
+
+          <!-- Images for current routine -->
+          <div class="form-group">
+            <label for="productImages">Add photos of your products (optional)</label>
+            <input type="file" id="productImages" accept="image/*" multiple />
+            <div id="productImagePreview" class="image-preview-row"></div>
+          </div>
+
+          <!-- Outcome -->
+          <div class="form-group">
+            <label for="productOutcome">How is your current routine working?</label>
+            <textarea
+              id="productOutcome"
+              rows="3"
+              placeholder="E.g., 'Acne is still active', 'Redness improved a bit', 'Feels too drying', etc."
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn primary glass-soft">
+            Run DERMAI analysis
+          </button>
+        </form>
+
+        <!-- AI profile result -->
+        <div id="analysisResult" class="analysis-result hidden">
+          <h3>Your DERMAI skin profile</h3>
+          <p id="analysisSummary"></p>
+        </div>
+
+        <!-- Merged product recommendations -->
+        <div id="recoBlock" class="analysis-result hidden" style="margin-top:14px;">
+          <h3>Suggested routines from DERMAI</h3>
+          <p id="recoIntro" class="panel-intro" style="margin-bottom:10px;">
+            <!-- will be filled by JS after analysis -->
+          </p>
+
+          <div class="reco-layout">
+            <div class="reco-column">
+              <h3>Herbal Routine 🌿</h3>
+              <ul class="reco-list" id="herbalReco"></ul>
+            </div>
+
+            <div class="reco-column">
+              <h3>Clinical Routine 🧪</h3>
+              <ul class="reco-list" id="clinicalReco"></ul>
+            </div>
+          </div>
+
+          <p class="note">
+            These are demo suggestions. In the full version, this section connects to real products or custom formulations matched to your skin profile.
+          </p>
+        </div>
+      </div>
+
+      <!-- 2. Custom Product Builder -->
+      <div class="service-panel" id="custom-builder">
+        <h2>Custom Product Builder</h2>
+        <p class="panel-intro">
+          Personalise your formula by adding or excluding ingredients to match your skin’s unique needs.
+        </p>
+
+        <form id="builderForm" class="service-form">
+          <div class="form-group">
+            <label for="baseType">Choose base product</label>
+            <select id="baseType">
+              <option>Moisturiser</option>
+              <option>Serum</option>
+              <option>Cleanser</option>
+              <option>Sunscreen</option>
+              <option>Spot treatment</option>
+            </select>
+          </div>
+
+          <!-- PRESET INGREDIENTS -->
+          <div class="form-group">
+            <label>Include ingredients</label>
+            <div class="chip-group" data-group="include">
+              <label><input type="checkbox" value="Hyaluronic acid" /> Hyaluronic acid</label>
+              <label><input type="checkbox" value="Niacinamide" /> Niacinamide</label>
+              <label><input type="checkbox" value="Vitamin C" /> Vitamin C</label>
+              <label><input type="checkbox" value="Ceramides" /> Ceramides</label>
+            </div>
+          </div>
+
+          <!-- USER-ADDED INGREDIENTS -->
+          <div class="form-group">
+            <label for="customInclude">Add your own ingredients (optional)</label>
+            <input
+              type="text"
+              id="customInclude"
+              placeholder="E.g., green tea, licorice extract, panthenol"
+            />
+            <p class="note">Separate multiple ingredients with commas.</p>
+          </div>
+
+          <!-- PRESET ALLERGIES / EXCLUDE -->
+          <div class="form-group">
+            <label>Exclude ingredients (allergies / sensitivities)</label>
+            <div class="chip-group" data-group="exclude">
+              <label><input type="checkbox" value="Fragrance" /> Fragrance</label>
+              <label><input type="checkbox" value="Alcohol" /> Alcohol</label>
+              <label><input type="checkbox" value="Essential oils" /> Essential oils</label>
+              <label><input type="checkbox" value="Salicylic acid" /> Salicylic acid</label>
+            </div>
+          </div>
+
+          <!-- USER-ADDED ALLERGIES -->
+          <div class="form-group">
+            <label for="customAllergy">Add your own allergies / avoid list</label>
+            <input
+              type="text"
+              id="customAllergy"
+              placeholder="E.g., shea butter, coconut oil, lanolin"
+            />
+            <p class="note">Separate multiple items with commas.</p>
+          </div>
+
+          <!-- TEXTURE -->
+          <div class="form-group">
+            <label for="texture">Preferred texture</label>
+            <select id="texture">
+              <option>Very light / gel</option>
+              <option>Light cream</option>
+              <option>Rich cream</option>
+              <option>Spray / mist</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn primary glass-soft">
+            Build my custom formula
+          </button>
+        </form>
+
+        <div id="builderResult" class="analysis-result hidden">
+          <h3>Your custom product summary</h3>
+          <p id="builderSummary"></p>
+        </div>
+      </div>
+
+      <!-- 3. Derma-AI Pharmacist -->
+      <div class="service-panel" id="chatbot">
+        <h2>Derma-AI Pharmacist</h2>
+        <p class="panel-intro">
+          Chat with DERMAI about your skin concerns. This is a demo of the chat interface.
+        </p>
+
+        <div class="chatbox glass-soft">
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-message bot">
+              <p>Hi! I’m Derma-AI Pharmacist 👩‍⚕️. Tell me about your skin concern today.</p>
+            </div>
+          </div>
+          <form id="chatForm" class="chat-input-row">
+            <input
+              type="text"
+              id="chatInput"
+              placeholder="Describe your skin issue..."
+              autocomplete="off"
+            />
+            <button type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- 4. Dermatologist Consultation -->
+      <div class="service-panel" id="dermatologist">
+        <h2>Dermatologist Consultation</h2>
+        <p class="panel-intro">
+          When things get more serious, DERMAI helps you connect with real dermatologists.
+        </p>
+
+        <form id="dermForm" class="service-form">
+          <div class="form-group">
+            <label for="dermType">Consultation type</label>
+            <select id="dermType">
+              <option>Video call</option>
+              <option>Chat only</option>
+              <option>In-clinic visit</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="dermDate">Preferred date</label>
+            <input type="date" id="dermDate" />
+          </div>
+
+          <div class="form-group">
+            <label for="dermTime">Preferred time</label>
+            <input type="time" id="dermTime" />
+          </div>
+
+          <div class="form-group">
+            <label for="dermNotes">Describe your skin issue</label>
+            <textarea
+              id="dermNotes"
+              rows="3"
+              placeholder="Tell the dermatologist what you're experiencing..."
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn primary glass-soft">
+            Request Appointment
+          </button>
+        </form>
+
+        <p id="dermMessage" class="auth-message"></p>
+      </div>
+
+      <!-- 5. Routine Tracking -->
+      <div class="service-panel" id="tracking">
+        <h2>Routine Tracking</h2>
+        <p class="panel-intro">
+          Tick off your skincare routine steps and see how consistent you are.
+        </p>
+
+        <div class="tracker">
+          <div class="tracker-row">
+            <span>Cleanser</span>
+            <button class="tracker-toggle" data-step="cleanser">Mark done</button>
+          </div>
+          <div class="tracker-row">
+            <span>Serum / Treatment</span>
+            <button class="tracker-toggle" data-step="serum">Mark done</button>
+          </div>
+          <div class="tracker-row">
+            <span>Moisturiser</span>
+            <button class="tracker-toggle" data-step="moisturiser">Mark done</button>
+          </div>
+          <div class="tracker-row">
+            <span>Sunscreen (AM)</span>
+            <button class="tracker-toggle" data-step="sunscreen">Mark done</button>
+          </div>
+        </div>
+
+        <p id="trackerStatus" class="auth-message"></p>
+      </div>
+
+      <!-- 6. Ingredient Checker -->
+      <div class="service-panel" id="ingredient-checker">
+        <h2>Ingredient Checker</h2>
+        <p class="panel-intro">
+          Paste a list of ingredients and DERMAI will flag potential issues (demo logic).
+        </p>
+
+        <form id="ingredientForm" class="service-form">
+          <div class="form-group">
+            <label for="ingredientList">Ingredients list</label>
+            <textarea
+              id="ingredientList"
+              rows="4"
+              placeholder="Example: Aqua, Glycerin, Fragrance, Alcohol denat., Niacinamide..."
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn primary glass-soft">
+            Check ingredients
+          </button>
+        </form>
+
+        <div id="ingredientResult" class="analysis-result hidden">
+          <h3>Ingredient analysis</h3>
+          <p id="ingredientSummary"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="custom-footer">
+    <div class="footer-main">
+      <div class="footer-column footer-brand">
+        <h3 class="footer-brand-title">DERMAI</h3>
+        <p class="footer-brand-text">
+          DERMAI is your AI-powered destination for smarter skincare.
+          From herbal routines to dermatology-inspired solutions, discover
+          routines that truly match your skin.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h4 class="footer-heading">CUSTOMER SERVICE</h4>
+        <a href="#" class="footer-link">Contact Us</a>
+        <a href="#" class="footer-link">Help Centre / FAQs</a>
+        <a href="#" class="footer-link">Shipping</a>
+        <a href="#" class="footer-link">Returns</a>
+        <a href="#" class="footer-link">Track my order</a>
+      </div>
+
+      <div class="footer-column">
+        <h4 class="footer-heading">ABOUT DERMAI</h4>
+        <a href="#" class="footer-link">Our Story</a>
+        <a href="#" class="footer-link">Science & AI</a>
+        <a href="#" class="footer-link">Sustainability</a>
+        <a href="#" class="footer-link">Careers</a>
+      </div>
+
+      <div class="footer-column">
+        <h4 class="footer-heading">LEGAL</h4>
+        <a href="#" class="footer-link">Terms & Conditions</a>
+        <a href="#" class="footer-link">Privacy Policy</a>
+        <a href="#" class="footer-link">Cookie Policy</a>
+        <a href="#" class="footer-link">Accessibility</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      © 2025 DERMAI. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="services.js"></script>
+</body>
+</html>

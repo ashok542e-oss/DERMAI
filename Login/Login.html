@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - DERMAI</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="icon" type="image/png" href="images/Dermai logo.png">
+</head>
+<body>
+
+<div class="auth-page">
+    <div class="auth-card glass-soft">
+
+        <div class="brand-block">
+            <img src="images/Dermai logo.png" class="brand-logo">
+            <h1 class="brand-name">DERMAI</h1>
+            <p class="brand-tagline">AI-Powered Skincare Consultation</p>
+        </div>
+
+        <h2 class="auth-title login-title">Welcome 👋</h2>
+        <p class="auth-subtitle">Log in to continue your skincare journey.</p>
+
+        <form id="loginForm" class="auth-form">
+
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="you@example.com" required>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+
+            <button class="btn-primary glass-soft" type="submit">Login</button>
+
+        </form>
+
+        <p class="bottom-text">
+            New to DERMAI?
+            <a href="#" id="openSignup" class="accent-link">Create an account</a>
+        </p>
+
+        <p id="loginMessage" class="auth-message"></p>
+    </div>
+</div>
+
+<!-- SIGNUP MODAL -->
+<div class="modal-backdrop hidden" id="signupModal">
+    <div class="modal-card glass-soft">
+
+        <button id="closeSignup" class="modal-close">&times;</button>
+
+        <div class="brand-block modal-brand">
+            <img src="images/Dermai logo.png" class="brand-logo">
+            <h1 class="brand-name">DERMAI</h1>
+        </div>
+
+        <h2 class="auth-title">Create Your Account ✨</h2>
+        <p class="auth-subtitle">Sign up to start personalized skincare.</p>
+
+        <form id="signupForm" class="auth-form">
+
+            <div class="input-group">
+                <label>Full Name</label>
+                <input type="text" id="signupName" placeholder="Your name" required>
+            </div>
+
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="signupEmail" placeholder="you@example.com" required>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="signupPassword" placeholder="Create a password" required>
+            </div>
+
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input type="password" id="signupConfirm" placeholder="Repeat password" required>
+            </div>
+
+            <button class="btn-primary glass-soft" type="submit">Sign Up</button>
+
+        </form>
+
+        <p class="bottom-text">
+            Already have an account?
+            <a href="#" id="modalBackToLogin" class="accent-link">Back to login</a>
+        </p>
+
+        <p id="signupMessage" class="auth-message"></p>
+
+    </div>
+</div>
+
+<script src="Login.js"></script>
+
+</body>
+</html>

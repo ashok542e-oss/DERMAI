@@ -18,11 +18,12 @@
     scroll-behavior: smooth;
 }
 
-body {
-    background-color: #fdfbfb;
+body.home-page {
+    background: linear-gradient(135deg, #fdfbfb 0%, #eaf4f4 50%, #cfe1da 100%);
     color: var(--text-dark);
     overflow-x: hidden;
 }
+
 
 /* --- Header (Rounded Glass) --- */
 header {
@@ -242,9 +243,12 @@ header {
     border-radius: 15px;
     transition: all 0.4s ease;
     cursor: pointer;
-    opacity: 0; /* for scroll reveal */
-    transform: translateY(30px);
+
+    /* make them visible by default */
+    opacity: 1;
+    transform: translateY(0);
 }
+
 
 .feature-card:hover {
     transform: translateY(-10px);
@@ -270,42 +274,84 @@ header {
     font-size: 2rem;
 }
 
+/* === Testimonial slider – fade TEXT only === */
+
 .testimonial-slider {
-    max-width: 800px;
-    margin: 0 auto;
-    position: relative;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  height: 220px;       /* Space for one card */
 }
 
+/* Card layout container */
 .testimonial-card {
-    background: var(--white);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: var(--shadow);
-    position: absolute;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-    width: 100%;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.testimonial-card.active {
-    opacity: 1;
-    z-index: 2;
+/* Static card background: stays visible, never fades */
+.testimonial-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: var(--shadow);
+  z-index: 0;
 }
 
-.testimonial-card p {
-    font-size: 1.2rem;
-    font-style: italic;
-    color: var(--text-dark);
-    margin-bottom: 20px;
-}
-
+/* Text sits on top and is the ONLY thing that fades */
+.testimonial-card p,
 .testimonial-card .author {
-    font-weight: 700;
-    color: var(--primary);
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: testimonialTextFade 10s infinite;
+}
+
+/* Delay per card so they alternate */
+.testimonial-card:nth-child(1) p,
+.testimonial-card:nth-child(1) .author {
+  animation-delay: 0s;
+}
+
+.testimonial-card:nth-child(2) p,
+.testimonial-card:nth-child(2) .author {
+  animation-delay: 5s;
+}
+
+/* If you add a 3rd card later:
+.testimonial-card:nth-child(3) p,
+.testimonial-card:nth-child(3) .author {
+  animation-delay: 10s;
+}
+*/
+
+@keyframes testimonialTextFade {
+  0%, 10%   { opacity: 0; }
+  15%, 45%  { opacity: 1; }  /* fully visible */
+  55%, 100% { opacity: 0; }
+}
+.home-page .feature-card {
+    background: var(--accent);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: none;
+    cursor: pointer;
+    opacity: 1 !important;            /* make sure it’s visible */
+    transform: translateY(0);         /* start position */
+    transition: all 0.3s ease;        /* smooth hover */
+}
+
+/* hover effect – white card + lift */
+.home-page .feature-card:hover {
+    background: #ffffff;
+    box-shadow: var(--shadow);
+    transform: translateY(-10px);
 }
 
 /* --- Footer (Glass + Smaller + Rounded) --- */
@@ -426,9 +472,10 @@ header {
 }
 
 /* PAGE BACKGROUND */
-body {
+body.login-page {
     background: linear-gradient(135deg, #fdfbfb 0%, #eaf4f4 50%, #cfe1da 100%);
 }
+
 
 /* SOFT GLASS EFFECT */
 .glass-soft {
@@ -541,6 +588,12 @@ body {
     cursor: pointer;
     transition: 0.25s ease;
 }
+.btn-primary {
+    background: #6B9080 !important;
+    color: white !important;
+    opacity: 1 !important;
+}
+
 
 .btn-primary:hover {
     background: #557c6b;
@@ -649,11 +702,12 @@ body {
     scroll-behavior: smooth;
 }
 
-body {
-    background-color: #fdfbfb;
+body.services-page {
+    background: linear-gradient(135deg, #fdfbfb 0%, #eaf4f4 50%, #cfe1da 100%);
     color: var(--text-dark);
     overflow-x: hidden;
 }
+
 
 /* utility */
 .hidden {
@@ -757,42 +811,6 @@ header {
     height: 100%;
     z-index: 1;
     box-shadow: 0 20px 50px rgba(0,0,0,0.18);
-}
-
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 2;
-}
-
-.slide-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    animation: zoomFade 24s infinite;
-}
-
-/* Stagger animation */
-.slide-img:nth-child(2) { animation-delay: 0s; }
-.slide-img:nth-child(3) { animation-delay: 6s; }
-.slide-img:nth-child(4) { animation-delay: 12s; }
-.slide-img:nth-child(5) { animation-delay: 18s; }
-
-/* Ken Burns effect */
-@keyframes zoomFade {
-    0%   { opacity: 0; transform: scale(1); }
-    4%   { opacity: 1; }
-    25%  { opacity: 1; transform: scale(1.15); }
-    29%  { opacity: 0; }
-    100% { opacity: 0; }
 }
 
 /* Hero content */
@@ -1162,7 +1180,7 @@ header {
 
 /* analysis / results */
 .analysis-result {
-    margin-top: 18px;
+    margin-top: 20px;
     padding: 14px 16px;
     border-radius: 18px;
     background: rgba(234,244,244,0.9);
@@ -1278,7 +1296,15 @@ header {
     justify-content: center;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
     z-index: 1200;
+
+    /* only new bit */
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
+.chat-fab:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+}
+
 
 /* --- Chat Widget --- */
 .chat-widget {
@@ -1535,28 +1561,24 @@ header {
     }
 }
 
-
 /* Contact Page Styles */
 
-/* RESET */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+/* background only for contact page */
+body.contact-page {
+    /* use same feel as home (you can tweak if you want) */
+    background: linear-gradient(135deg, #fdfbfb 0%, #eaf4f4 50%, #cfe1da 100%);
+    color: var(--text-dark);
+    overflow-x: hidden;
 }
 
-/* BACKGROUND */
-body {
-    background: radial-gradient(circle at top, #f7fffc 0%, #e6f7f1 40%, #d6ece4 100%);
-    min-height: 100vh;
-    padding: 20px;
-}
+
+
+
 
 /* HEADER */
 .derma-header {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 40px auto 25px;
 }
 
 .derma-logo {
@@ -1610,7 +1632,11 @@ body {
     color: #2a7e63;
 }
 
-input, textarea, select {
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
     width: 100%;
     padding: 13px;
     margin-top: 5px;
@@ -1620,6 +1646,7 @@ input, textarea, select {
     background: rgba(255,255,255,0.6);
     transition: .25s;
 }
+
 
 input:focus, textarea:focus, select:focus {
     border-color: #4ac39f;

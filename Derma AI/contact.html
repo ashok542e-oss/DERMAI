@@ -7,15 +7,16 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <link rel="icon" type="image/png" href="dermai-logo.png">
 </head>
-<body>
+<body class="contact-page">
+
 
     <!-- HEADER -->
      <header>
   <div class="header-container">
     <div class="logo-container">
-      <img src="assets/images/Dermai logo.png" alt="DERMAI Logo" class="header-logo" />
+      <img src="dermai-logo.png" alt="DERMAI Logo" class="header-logo" />
       <div class="logo-text">
         <h1>DERMAI</h1>
         <p class="tagline">AI-Powered Skincare Consultation</p>
@@ -24,7 +25,7 @@
 
     <nav class="header-links">
       <a href="index.html" class="login-btn">Home</a>
-      <a href="services.html" class="login-btn">Services</a>
+      <a href="services.html" class="login-btn" data-require-login="true">Services</a>
       <a href="contact.html" class="login-btn">Support</a>
       <a href="login.html" class="login-btn">Login</a>
     </nav>
@@ -126,6 +127,6 @@
     </div>
 
     <script src="contact.js"></script>
-
+    <script src="auth.js"></script>
 </body>
 </html>

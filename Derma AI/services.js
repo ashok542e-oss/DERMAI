@@ -1,4 +1,9 @@
 console.log("DERMAI services JS loaded");
+// simple guard: if not logged in, send to login first
+if (localStorage.getItem("dermaiLoggedIn") !== "true") {
+  window.location.href = "login.html?from=services";
+}
+
 
 /* =======================
    1. Tab switching

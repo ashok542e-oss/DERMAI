@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DERMAI - AI Skincare Consultant</title>
-    <link rel="icon" type="image/png" href="Dermai logo.png">
+    <link rel="icon" type="image/png" href="dermai-logo.png">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -12,12 +12,13 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="home-page">
+
 
 <header>
   <div class="header-container">
     <div class="logo-container">
-      <img src="assets/images/Dermai logo.png" alt="DERMAI Logo" class="header-logo" />
+      <img src="dermai-logo.png" alt="DERMAI Logo" class="header-logo" />
       <div class="logo-text">
         <h1>DERMAI</h1>
         <p class="tagline">AI-Powered Skincare Consultation</p>
@@ -26,7 +27,7 @@
 
     <nav class="header-links">
       <a href="index.html" class="login-btn">Home</a>
-      <a href="services.html" class="login-btn">Services</a>
+      <a href="services.html" class="login-btn" data-require-login="true">Services</a>
       <a href="contact.html" class="login-btn">Support</a>
       <a href="login.html" class="login-btn">Login</a>
     </nav>
@@ -97,20 +98,21 @@
 
     <!-- Testimonials -->
     <section class="testimonials">
-        <h2>What Our Users Say</h2>
+  <h2>What Our Users Say</h2>
 
-        <div class="testimonial-slider">
-            <div class="testimonial-card">
-                <p>"DERMAI helped me finally understand my combination skin and find products that work!"</p>
-                <div class="author">- Sarah L.</div>
-            </div>
+  <div class="testimonial-slider">
+    <div class="testimonial-card">
+      <p>"DERMAI helped me finally understand my combination skin and find products that work!"</p>
+      <div class="author">- Sarah L.</div>
+    </div>
 
-            <div class="testimonial-card">
-                <p>"The herbal recommendations have completely transformed my sensitive skin routine."</p>
-                <div class="author">- Michael T.</div>
-            </div>
-        </div>
-    </section>
+    <div class="testimonial-card">
+      <p>"The herbal recommendations have completely transformed my sensitive skin routine."</p>
+      <div class="author">- Michael T.</div>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <footer class="custom-footer">
@@ -156,6 +158,7 @@
     </div>
 </footer>
 
-<script src="script.js"></script>
+<script src="index.js"></script>
+<script src="auth.js"></script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 console.log("DERMAI services JS loaded");
+
 // simple guard: if not logged in, send to login first
 if (localStorage.getItem("dermaiLoggedIn") !== "true") {
   window.location.href = "login.html?from=services";
@@ -28,6 +29,7 @@ tabButtons.forEach((btn) => {
     });
   });
 });
+
 
 /* =======================
    2. DERMAI Analysis
@@ -99,22 +101,24 @@ if (productImagesInput && productImagePreview) {
   });
 }
 
-/* demo products */
+/* product  image */
+
 const herbalProducts = [
   {
     name: "Calming Green Tea Gel Cleanser",
     desc: "Gentle cleanser with green tea & aloe.",
-    img: "https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=300&q=80"
+    img: "Calming Green Tea Gel Cleanser.jpg"
   },
   {
     name: "Centella Barrier Serum",
     desc: "Soothes redness & repairs the barrier.",
-    img: "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa3?auto=format&fit=crop&w=300&q=80"
+    // reuse a known working skincare image
+    img: "DERMAI Centella Barrier Serum.jpg"
   },
   {
     name: "Squalane + Ceramide Moisturiser",
     desc: "Lightweight but barrier-repairing cream.",
-    img: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=300&q=80"
+    img: "Squalane + Ceramide Moisturiser.jpg"
   }
 ];
 
@@ -122,17 +126,17 @@ const clinicalProducts = [
   {
     name: "2% Salicylic Acid Cleanser",
     desc: "Unclogs pores & reduces breakouts.",
-    img: "https://images.unsplash.com/photo-1585386959984-a4155223f3f8?auto=format&fit=crop&w=300&q=80"
+    img: "Salicylic Acid Cleanser.jpg"
   },
   {
     name: "5% Niacinamide Serum",
     desc: "Balances oil & reduces redness.",
-    img: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=300&q=80"
+    img: "Niacinamide Serum.jpg"
   },
   {
     name: "SPF 50 Fluid",
     desc: "Daily UV protection for pigmentation.",
-    img: "https://images.unsplash.com/photo-1612810432633-96f64dc8ccb6?auto=format&fit=crop&w=300&q=80"
+    img: "SPF 50 Fluid.jpg"
   }
 ];
 
@@ -178,6 +182,7 @@ if (analysisForm && analysisSummary && analysisResult && recoBlock && recoIntro)
 
     const skinType = skinTypeSelect.value;
     const waterPH = document.getElementById("waterPH").value;
+    const currentProducts = document.getElementById("currentProducts").value.trim();
     const productOutcome = document.getElementById("productOutcome").value.trim();
 
     const comboDetail =
@@ -191,14 +196,54 @@ if (analysisForm && analysisSummary && analysisResult && recoBlock && recoIntro)
       )
       .map((pill) => pill.dataset.value);
 
+    let otherConcernText = "";
     if (
       otherConcernInput &&
       !otherConcernGroup.classList.contains("hidden") &&
       otherConcernInput.value.trim()
     ) {
-      activeConcerns.push(otherConcernInput.value.trim());
+      otherConcernText = otherConcernInput.value.trim();
+      activeConcerns.push(otherConcernText);
     }
 
+    const hasConcerns = activeConcerns.length > 0;
+    const hasImages =
+      productImagesInput &&
+      productImagesInput.files &&
+      productImagesInput.files.length > 0;
+
+    // Always show the result block when button is pressed
+    analysisResult.classList.remove("hidden");
+    // Hide reco block by default; we only show it when we have enough data
+    recoBlock.classList.add("hidden");
+
+    // ==========================
+    // VALIDATION: "box empty" case
+    // ==========================
+    const allEmpty =
+      !skinType &&
+      !comboDetail &&
+      !hasConcerns &&
+      !otherConcernText &&
+      !waterPH &&
+      !currentProducts &&
+      !productOutcome &&
+      !hasImages;
+
+    if (allEmpty) {
+      analysisSummary.innerHTML =
+        "You haven’t filled any data. Please select your skin type, add at least one skin concern, or describe your routine so DERMAI can analyse your skin.";
+      return; // stop here, do not run normal analysis
+    }
+
+    // Optional: require at least skin type + some concern
+    if (!skinType && !hasConcerns) {
+      analysisSummary.innerHTML =
+        "Missing key details. Please choose a skin type and at least one concern so DERMAI can create a meaningful analysis.";
+      return;
+    }
+
+    // If we reach here, run normal analysis
     let overview = "";
     let routineTips = [];
 
@@ -207,11 +252,9 @@ if (analysisForm && analysisSummary && analysisResult && recoBlock && recoIntro)
       if (comboDetail) {
         overview += `You described your combination pattern as <strong>${comboDetail}</strong>. `;
       }
-    } else {
-      overview += "Select a skin type for accurate analysis. ";
     }
 
-    if (activeConcerns.length) {
+    if (hasConcerns) {
       overview += `Main concerns: <strong>${activeConcerns.join(", ")}</strong>. `;
     }
 
@@ -221,30 +264,37 @@ if (analysisForm && analysisSummary && analysisResult && recoBlock && recoIntro)
       );
     }
 
-    if (productOutcome) {
+    if (currentProducts) {
       routineTips.push(
-        `Your current routine is: "${productOutcome}". DERMAI would adjust actives gradually rather than changing everything at once.`
+        `You are currently using: "${currentProducts}". DERMAI will consider how your existing products interact before suggesting changes.`
       );
     }
 
-    let html = `<strong>Overview</strong><br>${overview}<br><br>`;
+    if (productOutcome) {
+      routineTips.push(
+        `You described your current results as: "${productOutcome}". DERMAI would adjust actives gradually rather than changing everything at once.`
+      );
+    }
+
+    let html = `<strong>Overview</strong><br>${overview || "DERMAI needs more detail to fully understand your skin, but here is a starting point based on what you shared."}<br><br>`;
     if (routineTips.length) {
       html += `<strong>Suggestions</strong><br>• ${routineTips.join("<br>• ")}<br>`;
     }
 
     analysisSummary.innerHTML = html;
-    analysisResult.classList.remove("hidden");
 
-    const concernText = activeConcerns.length
-      ? activeConcerns.join(", ")
-      : "general skin balance";
+    // Only show recoBlock when we have at least skin type or concerns
+    if (skinType || hasConcerns) {
+      const concernText = hasConcerns ? activeConcerns.join(", ") : "general skin balance";
 
-    recoIntro.innerHTML = `Because you have <strong>${skinType || "your current skin type"}</strong> with concerns around <strong>${concernText}</strong>, DERMAI suggests starting with one of the routines below.`;
+      recoIntro.innerHTML = `Because you have <strong>${skinType || "your current skin type"}</strong> with concerns around <strong>${concernText}</strong>, DERMAI suggests starting with one of the routines below.`;
 
-    renderProductLists();
-    recoBlock.classList.remove("hidden");
+      renderProductLists();
+      recoBlock.classList.remove("hidden");
+    }
   });
 }
+
 
 /* =======================
    3. Custom Product Builder (pill style)
@@ -293,6 +343,25 @@ if (builderForm && builderResult && builderSummary) {
     const allInclude = [...includeFromPills, ...customInclude];
     const allExclude = [...excludeFromPills, ...customAllergies];
 
+    builderResult.classList.remove("hidden");
+
+    // ==========================
+    // VALIDATION: "box empty" case
+    // (no ingredients selected or typed at all)
+    // ==========================
+    const noIngredientData =
+      includeFromPills.length === 0 &&
+      excludeFromPills.length === 0 &&
+      !customIncludeRaw.trim() &&
+      !customAllergyRaw.trim();
+
+    if (noIngredientData) {
+      builderSummary.innerHTML =
+        "You haven’t filled any data. Please select at least one ingredient to include or exclude, or add your own actives/allergies so DERMAI can build a custom formula.";
+      return;
+    }
+
+    // Normal builder summary
     let html = `Base product: <strong>${baseType}</strong><br>`;
     html += `Preferred texture: <strong>${texture}</strong><br><br>`;
 
@@ -313,9 +382,9 @@ if (builderForm && builderResult && builderSummary) {
     }
 
     builderSummary.innerHTML = html;
-    builderResult.classList.remove("hidden");
   });
 }
+
 
 /* =======================
    4. Floating Chat (Pharmacist / Dermatologist)
@@ -363,7 +432,9 @@ chatRoleTabs.forEach((tab) => {
         appointmentToggle.classList.remove("hidden");
       } else {
         appointmentToggle.classList.add("hidden");
-        appointmentPanel.classList.add("hidden");
+        if (appointmentPanel) {
+          appointmentPanel.classList.add("hidden");
+        }
       }
     }
 
@@ -448,6 +519,7 @@ if (appointmentForm && chatMessages) {
   });
 }
 
+
 /* =======================
    5. Ingredient Checker
 ======================= */
@@ -460,10 +532,19 @@ if (ingredientForm && ingredientResult && ingredientSummary) {
   ingredientForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const text = document
-      .getElementById("ingredientList")
-      .value.toLowerCase()
-      .trim();
+    const textEl = document.getElementById("ingredientList");
+    const text = textEl ? textEl.value.toLowerCase().trim() : "";
+
+    ingredientResult.classList.remove("hidden");
+
+    // ==========================
+    // VALIDATION: "box empty" case
+    // ==========================
+    if (!text) {
+      ingredientSummary.innerHTML =
+        "You haven’t filled any data. Please paste at least one ingredient (or a full INCI list) for DERMAI to check.";
+      return;
+    }
 
     const warnings = [];
 
@@ -480,7 +561,5 @@ if (ingredientForm && ingredientResult && ingredientSummary) {
       warnings.length > 0
         ? warnings.map((w) => `• ${w}`).join("<br>")
         : "No obvious red-flag ingredients detected in this quick check. Always patch-test if you’re unsure.";
-
-    ingredientResult.classList.remove("hidden");
   });
 }

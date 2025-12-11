@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DERMAAI Support</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="dermai-logo.png">
+</head>
+<body class="contact-page">
+
+
+    <!-- HEADER -->
+     <header>
+  <div class="header-container">
+    <div class="logo-container">
+      <img src="dermai-logo.png" alt="DERMAI Logo" class="header-logo" />
+      <div class="logo-text">
+        <h1>DERMAI</h1>
+        <p class="tagline">AI-Powered Skincare Consultation</p>
+      </div>
+    </div>
+
+    <nav class="header-links">
+      <a href="index.html" class="login-btn">Home</a>
+      <a href="services.html" class="login-btn" data-require-login="true">Services</a>
+      <a href="contact.html" class="login-btn">Support</a>
+      <a href="login.html" class="login-btn">Login</a>
+    </nav>
+  </div>
+</header>
+
+    <div class="derma-header">
+        <a class="derma-logo">DERMAI</a>
+        <p class="derma-tagline">Support Center</p>
+    </div>
+
+    <div class="container">
+
+        <!-- SUPPORT FORM -->
+        <div class="glass-card form-card">
+
+            <h1>Contact Support</h1>
+
+            <form id="contactForm">
+
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email address">
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Enter your phone number">
+                </div>
+
+                <div class="form-group">
+                    <label>Subject</label>
+                    <select id="subject">
+                        <option value="">Select a subject</option>
+                        <option value="order">Order Inquiry</option>
+                        <option value="return">Return Request</option>
+                        <option value="product">Product Question</option>
+                        <option value="technical">Technical Support</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Message</label>
+                    <textarea id="message" placeholder="Write your message..."></textarea>
+                </div>
+
+                <button type="submit" class="glass-btn">Send Message</button>
+
+            </form>
+        </div>
+    </div>
+
+
+    <!-- FLOATING CHAT ICON -->
+    <div id="chatIcon" class="chat-icon-floating">
+        <i class="fas fa-headset"></i>
+    </div>
+
+    <!-- POPUP CHAT WINDOW -->
+    <div id="chatPopup" class="chat-popup">
+
+        <div class="chat-header-popup">
+            <span>DERMAAI Support AI</span>
+            <i class="fas fa-times" id="closeChat"></i>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                Hello! 👋 How can I help you today?
+                <div class="quick-actions">
+                    <button class="quick-btn" data-msg="Order status">Order Status</button>
+                    <button class="quick-btn" data-msg="Return policy">Return Policy</button>
+                    <button class="quick-btn" data-msg="Product help">Product Help</button>
+                    <button class="quick-btn" data-msg="Technical issue">Technical Issue</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+            <span></span><span></span><span></span>
+        </div>
+
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type a message...">
+            <button id="sendMessage"><i class="fas fa-paper-plane"></i></button>
+        </div>
+
+    </div>
+    
+
+    <!-- SUCCESS TOAST -->
+    <div id="successMessage" class="success-toast">
+        Message sent successfully!
+    </div>
+ <footer class="custom-footer">
+    <div class="footer-main">
+      <div class="footer-column footer-brand">
+        <h3 class="footer-brand-title">DERMAI</h3>
+        <p class="footer-brand-text">
+          DERMAI is your AI-powered destination for smarter skincare.
+          From herbal routines to dermatology-inspired solutions, discover
+          routines that truly match your skin.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h4 class="footer-heading">CUSTOMER SERVICE</h4>
+        <a href="contact.html" class="footer-link">Contact us</a>
+        <a href="#" class="footer-link">Help Centre / FAQs</a>
+        <a href="#" class="footer-link">Shipping</a>
+        <a href="#" class="footer-link">Returns</a>
+        <a href="#" class="footer-link">Track my order</a>
+      </div>
+
+      <div class="footer-column">
+        <h4 class="footer-heading">ABOUT DERMAI</h4>
+        <a href="#" class="footer-link">Our Story</a>
+        <a href="#" class="footer-link">Science & AI</a>
+        <a href="#" class="footer-link">Sustainability</a>
+        <a href="#" class="footer-link">Careers</a>
+      </div>
+
+      <div class="footer-column">
+        <h4 class="footer-heading">LEGAL</h4>
+        <a href="#" class="footer-link">Terms & Conditions</a>
+        <a href="#" class="footer-link">Privacy Policy</a>
+        <a href="#" class="footer-link">Cookie Policy</a>
+        <a href="#" class="footer-link">Accessibility</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      © 2025 DERMAI. All rights reserved.
+    </div>
+  </footer>
+
+    <script src="contact.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>
